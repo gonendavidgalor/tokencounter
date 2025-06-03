@@ -13,11 +13,10 @@ async def tokenize_text(request: Request):
 
     data = await request.json()
     text = data.get("text", "")
-    tokens = tokenizer.encode(text)
-    return {"tokens": tokens}
-    
-    
+    token_count = len(tokenizer.encode(text))
+    return {"token_count": token_count}
+
 @app.get("/")
 async def root():
     return {"status": "Tokenizer server is running"}
-    
+
