@@ -15,3 +15,9 @@ async def tokenize_text(request: Request):
     text = data.get("text", "")
     tokens = tokenizer.encode(text)
     return {"tokens": tokens}
+    
+    
+@app.get("/")
+async def root():
+    return {"status": "Tokenizer server is running"}
+    
