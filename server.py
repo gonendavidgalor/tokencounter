@@ -32,6 +32,8 @@ async def tokenize_text(request: Request):
         # Fallback to simple estimation
         token_count = max(1, len(text) // 4)
     
+    print(f"[TOKENIZE] IP: {request.client.host}, Tokens: {token_count}, Text: {text[:50]}...")
+    
     return {"token_count": token_count}
 
 @app.get("/")
