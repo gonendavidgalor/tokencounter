@@ -25,13 +25,9 @@ async def tokenize_text(request: Request):
     data = await request.json()
     text = data.get("text", "")
     
-    if tokenizer:
         # Use actual tokenizer if available
-        token_count = len(tokenizer.encode(text))
-    else:
-        # Fallback to simple estimation
-        token_count = max(1, len(text) // 4)
-    
+    token_count = len(tokenizer.encode(text))
+   
     print(f"[TOKENIZE] IP: {request.client.host}, Tokens: {token_count}, Text: {text[:50]}...")
     
     return {"token_count": token_count}
