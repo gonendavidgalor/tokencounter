@@ -3,19 +3,17 @@ import uvicorn
 import os
 
 app = FastAPI()
-
-# Initialize tokenizer with error handling
-tokenizer = None
-try:
-    from transformers import AutoTokenizer
-    # Try to load the tokenizer, but don't crash if it fails
-    tokenizer = AutoTokenizer.from_pretrained("./deepseek_v3_tokenizer", trust_remote_code=True)
-    print("✅ Tokenizer loaded successfully")
-except Exception as e:
-    print(f"❌ Failed to load tokenizer: {e}")
-    print("🔄 Will use simple token estimation")
-
 API_KEY = "supersecret123"
+
+# pip3 install transformers
+# python3 deepseek_tokenizer.py
+import transformers
+
+chat_tokenizer_dir = "./deepseek_v3_tokenizer"
+
+tokenizer = transformers.AutoTokenizer.from_pretrained( 
+        chat_tokenizer_dir, trust_remote_code=True
+        )
 
 @app.post("/tokenize")
 async def tokenize_text(request: Request):
@@ -25,7 +23,6 @@ async def tokenize_text(request: Request):
     data = await request.json()
     text = data.get("text", "")
     
-        # Use actual tokenizer if available
     token_count = len(tokenizer.encode(text))
    
     print(f"[TOKENIZE] IP: {request.client.host}, Tokens: {token_count}, Text: {text[:50]}...")
