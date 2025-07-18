@@ -22,11 +22,15 @@ async def tokenize_text(request: Request):
 
     data = await request.json()
     text = data.get("text", "")
-    
+    token_ids = tokenizer.encode(text)
+
     token_count = len(tokenizer.encode(text))
-   
-    print(f"[TOKENIZE] IP: {request.client.host}, Tokens: {token_count}, Text: {text[:50]}...")
+    print(f"[TOKENIZE] IP: {request.client.host}, Tokens: {token_count}")
+    print(f"[TOKEN IDS] {token_ids}")
+    print(f"[TEXT] {text[:100]}...")  # just a preview to avoid spam
+
     
+
     return {"token_count": token_count}
 
 @app.get("/")
